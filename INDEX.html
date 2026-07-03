@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Atila Fit — Evde Kalistenik Programı</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --marble:#ECEAE5;
+  --marble-dark:#DBD8D1;
+  --vein:#8E8A82;
+  --ink:#26241F;
+  --gold:#B8922E;
+  --gold-soft:#E7D9AE;
+  --statue:#FBFAF7;
+  --ivy:#4A5D43;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{
+  font-family:'Manrope',sans-serif;
+  background:var(--marble);
+  background-image:
+    radial-gradient(ellipse 80% 50% at 20% 0%, rgba(255,255,255,.7), transparent),
+    radial-gradient(ellipse 60% 40% at 90% 100%, rgba(142,138,130,.12), transparent);
+  color:var(--ink);
+  min-height:100vh;
+  padding-bottom:90px;
+}
+.wrap{max-width:480px;margin:0 auto;padding:0 16px}
+
+/* ---------- Header ---------- */
+header{padding:24px 0 10px;text-align:center}
+.logo{margin-bottom:10px}
+.logo svg{filter:drop-shadow(0 2px 6px rgba(38,36,31,.15))}
+.brandname{
+  font-family:'Cinzel',serif;font-weight:600;font-size:15px;
+  letter-spacing:.35em;margin-top:8px;color:var(--ink);
+}
+.brandname span{color:var(--gold)}
+.credit{
+  text-align:center;font-size:11px;color:var(--vein);
+  letter-spacing:.2em;text-transform:uppercase;font-weight:600;
+  margin:4px 0 24px;
+}
+.credit b{color:var(--gold)}
+.eyebrow{
+  font-size:11px;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--vein);font-weight:600;margin-bottom:8px;
+}
+h1{
+  font-family:'Cinzel',serif;font-weight:600;font-size:26px;
+  line-height:1.2;letter-spacing:.02em;
+}
+h1 span{color:var(--gold)}
+.sub{font-size:13px;color:var(--vein);margin-top:8px;line-height:1.5}
+.gold-rule{
+  width:56px;height:3px;background:var(--gold);
+  margin:16px auto 0;border-radius:2px;
+}
+
+/* ---------- Program özeti ---------- */
+.schedule{
+  display:flex;gap:6px;justify-content:center;margin:18px 0 4px;
+}
+.schedule .d{
+  width:38px;height:38px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:11px;font-weight:700;
+  border:1.5px solid var(--vein);color:var(--vein);
+}
+.schedule .d.on{background:var(--ink);color:var(--gold-soft);border-color:var(--ink)}
+.schedule-note{text-align:center;font-size:12px;color:var(--vein);margin-bottom:6px}
+
+/* ---------- Tabs ---------- */
+.tabs{
+  display:flex;gap:8px;margin:18px 0 14px;
+}
+.tab{
+  flex:1;padding:12px 4px;border-radius:12px;
+  border:1.5px solid var(--marble-dark);
+  background:rgba(255,255,255,.5);
+  font-family:'Manrope',sans-serif;font-weight:700;font-size:13px;
+  color:var(--vein);cursor:pointer;text-align:center;line-height:1.3;
+}
+.tab small{display:block;font-weight:500;font-size:10px;margin-top:2px}
+.tab.active{
+  background:var(--ink);color:var(--statue);border-color:var(--ink);
+}
+.tab.active small{color:var(--gold-soft)}
+
+/* ---------- Isınma ---------- */
+.warmup{
+  background:rgba(255,255,255,.55);
+  border:1.5px dashed var(--vein);
+  border-radius:14px;padding:14px 16px;margin-bottom:16px;
+  font-size:13px;line-height:1.7;
+}
+.warmup b{font-family:'Cinzel',serif;font-size:13px;letter-spacing:.06em}
+
+/* ---------- Egzersiz kartı ---------- */
+.day{display:none}
+.day.active{display:block}
+.card{
+  background:#fff;border-radius:18px;overflow:hidden;
+  margin-bottom:16px;
+  box-shadow:0 2px 12px rgba(38,36,31,.07);
+  border:1px solid var(--marble-dark);
+}
+.figure{
+  background:linear-gradient(180deg,#CFCCC5,#C2BFB7);
+  position:relative;
+}
+.figure svg{display:block;width:100%;height:auto}
+.done-badge{
+  position:absolute;top:10px;right:12px;
+  font-size:11px;font-weight:700;color:var(--ivy);
+  background:rgba(255,255,255,.85);border-radius:20px;
+  padding:4px 10px;display:none;
+}
+.card.complete .done-badge{display:block}
+.card-body{padding:14px 16px 16px}
+.card-top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.ex-name{font-family:'Cinzel',serif;font-weight:600;font-size:17px;letter-spacing:.02em}
+.ex-dose{
+  font-weight:800;font-size:15px;color:var(--gold);white-space:nowrap;
+}
+.ex-target{font-size:11px;color:var(--vein);margin-top:2px;font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+.howto{
+  margin-top:10px;font-size:13.5px;line-height:1.65;color:#3d3a34;
+  padding-left:2px;
+}
+.howto li{margin-left:18px;margin-bottom:3px}
+.sets-row{
+  display:flex;align-items:center;gap:10px;margin-top:14px;flex-wrap:wrap;
+}
+.sets-label{font-size:12px;font-weight:700;color:var(--vein)}
+.set-dot{
+  width:40px;height:40px;border-radius:50%;
+  border:2px solid var(--marble-dark);background:#fff;
+  font-weight:800;font-size:13px;color:var(--vein);
+  cursor:pointer;font-family:'Manrope',sans-serif;
+}
+.set-dot.done{
+  background:var(--ivy);border-color:var(--ivy);color:#fff;
+}
+.rest-note{font-size:12px;color:var(--vein);margin-left:auto;font-weight:600}
+
+/* ---------- Dinlenme sayacı ---------- */
+.timerbar{
+  position:fixed;bottom:0;left:0;right:0;
+  background:var(--ink);
+  padding:12px 16px calc(12px + env(safe-area-inset-bottom));
+  z-index:50;
+}
+.timer-inner{max-width:480px;margin:0 auto;display:flex;align-items:center;gap:12px}
+.timer-label{color:var(--gold-soft);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.timer-display{
+  font-family:'Cinzel',serif;font-size:26px;color:var(--statue);
+  min-width:74px;text-align:center;font-weight:600;
+}
+.tbtn{
+  flex:1;padding:11px 0;border-radius:10px;border:none;
+  font-family:'Manrope',sans-serif;font-weight:700;font-size:14px;
+  background:var(--gold);color:var(--ink);cursor:pointer;
+}
+.tbtn.secondary{background:transparent;border:1.5px solid var(--vein);color:var(--statue)}
+.timer-display.flash{color:var(--gold);animation:flash .5s steps(1) 6}
+@keyframes flash{50%{opacity:.2}}
+
+/* ---------- İlerleme / notlar ---------- */
+.progress-box{
+  background:rgba(255,255,255,.55);border:1px solid var(--marble-dark);
+  border-radius:14px;padding:16px;margin:8px 0 20px;
+  font-size:13px;line-height:1.7;
+}
+.progress-box h3{font-family:'Cinzel',serif;font-size:14px;margin-bottom:8px;letter-spacing:.05em}
+.progress-box td{padding:4px 8px 4px 0;vertical-align:top;font-size:13px}
+.progress-box td:first-child{font-weight:700;color:var(--gold);white-space:nowrap}
+
+/* ---------- Heykel figür animasyonu ---------- */
+.pA{animation:swapA 2s steps(1) infinite}
+.pB{animation:swapB 2s steps(1) infinite}
+@keyframes swapA{0%,49%{opacity:1}50%,100%{opacity:0}}
+@keyframes swapB{0%,49%{opacity:0}50%,100%{opacity:1}}
+@media (prefers-reduced-motion: reduce){
+  .pA{animation:none;opacity:1}
+  .pB{animation:none;opacity:0}
+}
+.fig-line{stroke:var(--statue);stroke-width:6;stroke-linecap:round;fill:none}
+.fig-head{fill:var(--statue)}
+.mat{stroke:var(--gold);stroke-width:4;stroke-linecap:round}
+.bench{fill:#AEABA3}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="logo">
+    <svg viewBox="0 0 100 100" width="72" height="72" aria-label="AA logo">
+      <circle cx="50" cy="50" r="46" fill="none" stroke="var(--gold)" stroke-width="2.5"/>
+      <circle cx="50" cy="50" r="40" fill="none" stroke="var(--gold)" stroke-width="1" opacity=".5"/>
+      <!-- defne dalları -->
+      <path d="M20 62 Q26 74 38 80" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/>
+      <path d="M80 62 Q74 74 62 80" fill="none" stroke="var(--gold)" stroke-width="2" stroke-linecap="round"/>
+      <g fill="var(--gold)">
+        <ellipse cx="23" cy="66" rx="4" ry="1.8" transform="rotate(55 23 66)"/>
+        <ellipse cx="28" cy="72" rx="4" ry="1.8" transform="rotate(45 28 72)"/>
+        <ellipse cx="34" cy="77" rx="4" ry="1.8" transform="rotate(30 34 77)"/>
+        <ellipse cx="77" cy="66" rx="4" ry="1.8" transform="rotate(-55 77 66)"/>
+        <ellipse cx="72" cy="72" rx="4" ry="1.8" transform="rotate(-45 72 72)"/>
+        <ellipse cx="66" cy="77" rx="4" ry="1.8" transform="rotate(-30 66 77)"/>
+      </g>
+      <text x="50" y="60" text-anchor="middle" font-family="Cinzel, serif" font-weight="600"
+            font-size="34" fill="var(--ink)" letter-spacing="1">AF</text>
+    </svg>
+    <div class="brandname">ATİLA <span>FIT</span></div>
+  </div>
+  <div class="eyebrow">Evde &middot; Ekipmansız &middot; Başlangıç</div>
+  <h1>KALİSTENİK <span>PROGRAMI</span></h1>
+  <p class="sub">Haftada 3 gün &middot; ~25 dakika &middot; Aralarda en az 1 gün dinlenme</p>
+  <div class="gold-rule"></div>
+</header>
+
+<div class="schedule">
+  <div class="d on">Pzt</div><div class="d">Sal</div><div class="d on">Çar</div>
+  <div class="d">Per</div><div class="d on">Cum</div><div class="d">Cmt</div><div class="d">Paz</div>
+</div>
+<p class="schedule-note">Önerilen günler — istersen kaydır, yeter ki arada 1 gün boşluk olsun.</p>
+
+<div class="tabs">
+  <button class="tab active" data-day="1">GÜN 1<small>Temel Güç</small></button>
+  <button class="tab" data-day="2">GÜN 2<small>Denge &amp; Sırt</small></button>
+  <button class="tab" data-day="3">GÜN 3<small>Tüm Vücut</small></button>
+</div>
+
+<div class="warmup">
+  <b>ISINMA (her gün, 5 dk):</b><br>
+  Yerinde tempolu yürüyüş 2 dk &middot; Kol çevirme 30 sn &middot; Gövde dönüşü 30 sn &middot; Yavaş yarım squat 10 tekrar
+</div>
+
+<!-- ================= GÜN 1 ================= -->
+<div class="day active" id="day1">
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="80" cy="22" r="8"/>
+          <path class="fig-line" d="M80 32 L80 62 L79 82 L79 104"/>
+          <path class="fig-line" d="M80 40 L92 58"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="70" cy="44" r="8"/>
+          <path class="fig-line" d="M72 54 L64 76 L86 82 L84 104"/>
+          <path class="fig-line" d="M72 58 L98 52"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Squat (Çömelme)</span><span class="ex-dose">3 &times; 12</span></div>
+      <div class="ex-target">Bacak &middot; Kalça</div>
+      <ol class="howto">
+        <li>Ayaklar omuz genişliğinde, burunlar hafif dışa dönük.</li>
+        <li>Sandalyeye oturur gibi kalçanı geriye ve aşağı indir.</li>
+        <li>Topuklardan iterek kalk. Sırt düz, göğüs yukarıda.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 60 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="108" cy="56" r="8"/>
+          <path class="fig-line" d="M46 104 L58 86 L100 64"/>
+          <path class="fig-line" d="M94 68 L98 104"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="110" cy="80" r="8"/>
+          <path class="fig-line" d="M46 104 L58 94 L102 86"/>
+          <path class="fig-line" d="M96 88 L90 98 L100 104"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Diz Üstü Şınav</span><span class="ex-dose">3 &times; 8</span></div>
+      <div class="ex-target">Göğüs &middot; Kol</div>
+      <ol class="howto">
+        <li>Dizlerin yerde, eller omuz hizasında biraz geniş.</li>
+        <li>Dizden başa kadar vücut düz bir çizgi olsun.</li>
+        <li>Göğsünü yere yaklaştır, sonra kollarını iterek kalk.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 60 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="32" cy="98" r="7"/>
+          <path class="fig-line" d="M40 100 L76 100 L90 78 L96 104"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="32" cy="98" r="7"/>
+          <path class="fig-line" d="M40 100 L82 74 L94 74 L96 104"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Kalça Köprüsü</span><span class="ex-dose">3 &times; 12</span></div>
+      <div class="ex-target">Kalça &middot; Bel</div>
+      <ol class="howto">
+        <li>Sırt üstü yat, dizler bükülü, ayaklar yerde.</li>
+        <li>Kalçanı yukarı kaldır; omuzdan dize düz çizgi.</li>
+        <li>Yukarıda 1 saniye sık, yavaşça in.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 60 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g>
+          <circle class="fig-head" cx="114" cy="60" r="8"/>
+          <path class="fig-line" d="M42 88 L102 68"/>
+          <path class="fig-line" d="M98 70 L94 92 L114 92"/>
+          <path class="fig-line" d="M42 88 L38 104"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Plank</span><span class="ex-dose">3 &times; 20 sn</span></div>
+      <div class="ex-target">Karın &middot; Core</div>
+      <ol class="howto">
+        <li>Dirsekler omuz altında, ayak parmak uçlarındasın.</li>
+        <li>Vücut baştan topuğa dümdüz — kalça ne yukarı ne aşağı.</li>
+        <li>Karnını içeri çekip nefes almaya devam et.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 45 sn</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= GÜN 2 ================= -->
+<div class="day" id="day2">
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="80" cy="22" r="8"/>
+          <path class="fig-line" d="M80 32 L80 62 L79 82 L79 104"/>
+          <path class="fig-line" d="M80 40 L92 58"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="78" cy="38" r="8"/>
+          <path class="fig-line" d="M78 48 L76 72 L96 78 L94 104"/>
+          <path class="fig-line" d="M76 72 L56 92 L42 104"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Geriye Lunge</span><span class="ex-dose">3 &times; 8 <small>/bacak</small></span></div>
+      <div class="ex-target">Bacak &middot; Denge</div>
+      <ol class="howto">
+        <li>Ayakta başla, bir ayağını geriye büyük adım at.</li>
+        <li>Arka diz yere yaklaşana kadar in, gövde dik.</li>
+        <li>Ön topuktan iterek başa dön. Bacak değiştir.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 60 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <rect class="bench" x="106" y="78" width="32" height="28" rx="3"/>
+        <g class="pA">
+          <circle class="fig-head" cx="100" cy="48" r="8"/>
+          <path class="fig-line" d="M36 104 L92 58"/>
+          <path class="fig-line" d="M88 62 L108 78"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="106" cy="62" r="8"/>
+          <path class="fig-line" d="M36 104 L98 70"/>
+          <path class="fig-line" d="M94 72 L100 82 L110 78"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Eğimli Şınav</span><span class="ex-dose">3 &times; 10</span></div>
+      <div class="ex-target">Göğüs &middot; Omuz</div>
+      <ol class="howto">
+        <li>Ellerini sağlam bir masaya veya kanepe koluna koy.</li>
+        <li>Vücut düz, göğsünü kenara doğru indir.</li>
+        <li>İterek başa dön. Kolaysa daha alçak yüzey seç.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 60 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="28" cy="96" r="7"/>
+          <path class="fig-line" d="M18 94 L38 98 L96 98 L118 98"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="26" cy="86" r="7"/>
+          <path class="fig-line" d="M14 78 L36 92 L96 96 L118 86"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Superman</span><span class="ex-dose">3 &times; 10</span></div>
+      <div class="ex-target">Sırt &middot; Bel</div>
+      <ol class="howto">
+        <li>Yüzüstü yat, kollar öne uzanmış.</li>
+        <li>Kollarını ve bacaklarını aynı anda yerden kaldır.</li>
+        <li>Yukarıda 2 saniye tut, yavaşça bırak.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 45 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="112" cy="60" r="8"/>
+          <path class="fig-line" d="M36 104 L60 84 L100 66"/>
+          <path class="fig-line" d="M100 66 L104 104"/>
+          <path class="fig-line" d="M60 84 L80 88 L76 104"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="112" cy="60" r="8"/>
+          <path class="fig-line" d="M60 84 L100 66"/>
+          <path class="fig-line" d="M100 66 L104 104"/>
+          <path class="fig-line" d="M60 84 L36 104"/>
+          <path class="fig-line" d="M60 84 L74 100"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Dağcı (Mountain Climber)</span><span class="ex-dose">3 &times; 20 sn</span></div>
+      <div class="ex-target">Karın &middot; Kardiyo</div>
+      <ol class="howto">
+        <li>Şınav pozisyonunda başla, eller omuz altında.</li>
+        <li>Dizlerini sırayla göğsüne doğru çek.</li>
+        <li>Kalçan yukarı kalkmasın, tempo sende.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 45 sn</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= GÜN 3 ================= -->
+<div class="day" id="day3">
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="80" cy="22" r="8"/>
+          <path class="fig-line" d="M80 32 L80 62 L79 82 L79 104"/>
+          <path class="fig-line" d="M80 40 L92 58"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="70" cy="44" r="8"/>
+          <path class="fig-line" d="M72 54 L64 76 L86 82 L84 104"/>
+          <path class="fig-line" d="M72 58 L98 52"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Squat (Çömelme)</span><span class="ex-dose">3 &times; 15</span></div>
+      <div class="ex-target">Bacak &middot; Kalça</div>
+      <ol class="howto">
+        <li>Gün 1'deki gibi — bu sefer 15 tekrar.</li>
+        <li>Son tekrarlar zorlamıyorsa daha yavaş in (3 saniyede).</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 60 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="108" cy="56" r="8"/>
+          <path class="fig-line" d="M46 104 L58 86 L100 64"/>
+          <path class="fig-line" d="M94 68 L98 104"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="110" cy="80" r="8"/>
+          <path class="fig-line" d="M46 104 L58 94 L102 86"/>
+          <path class="fig-line" d="M96 88 L90 98 L100 104"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Diz Üstü Şınav</span><span class="ex-dose">3 &times; 10</span></div>
+      <div class="ex-target">Göğüs &middot; Kol</div>
+      <ol class="howto">
+        <li>Gün 1'deki teknikle, 2 tekrar fazla.</li>
+        <li>10 tekrar rahat gelmeye başladıysa normal şınavı dene.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 60 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="108" cy="66" r="7"/>
+          <path class="fig-line" d="M56 104 L56 84 L100 74 L100 104"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="108" cy="66" r="7"/>
+          <path class="fig-line" d="M62 104 L58 84 L100 74 L96 104"/>
+          <path class="fig-line" d="M58 84 L26 76"/>
+          <path class="fig-line" d="M100 74 L132 64"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Bird-Dog</span><span class="ex-dose">3 &times; 8 <small>/taraf</small></span></div>
+      <div class="ex-target">Core &middot; Denge</div>
+      <ol class="howto">
+        <li>Emekleme pozisyonu al: eller omuz, dizler kalça altında.</li>
+        <li>Sağ kolu öne, sol bacağı geriye aynı anda uzat.</li>
+        <li>2 saniye tut, değiştir. Bel sabit kalsın.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 45 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g class="pA">
+          <circle class="fig-head" cx="30" cy="96" r="7"/>
+          <path class="fig-line" d="M38 98 L72 100 L86 78 L92 104"/>
+        </g>
+        <g class="pB">
+          <circle class="fig-head" cx="40" cy="82" r="7"/>
+          <path class="fig-line" d="M46 88 L72 100 L86 78 L92 104"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Mekik (Crunch)</span><span class="ex-dose">3 &times; 12</span></div>
+      <div class="ex-target">Karın</div>
+      <ol class="howto">
+        <li>Sırt üstü yat, dizler bükülü, eller göğüste.</li>
+        <li>Sadece omuzlarını yerden kaldır — boyundan çekme.</li>
+        <li>Yukarıda karnını sık, kontrollü in.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 45 sn</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="figure">
+      <svg viewBox="0 0 160 120">
+        <line class="mat" x1="24" y1="108" x2="136" y2="108"/>
+        <g>
+          <circle class="fig-head" cx="114" cy="60" r="8"/>
+          <path class="fig-line" d="M42 88 L102 68"/>
+          <path class="fig-line" d="M98 70 L94 92 L114 92"/>
+          <path class="fig-line" d="M42 88 L38 104"/>
+        </g>
+      </svg>
+      <span class="done-badge">✓ Tamamlandı</span>
+    </div>
+    <div class="card-body">
+      <div class="card-top"><span class="ex-name">Plank</span><span class="ex-dose">3 &times; 25 sn</span></div>
+      <div class="ex-target">Karın &middot; Core</div>
+      <ol class="howto">
+        <li>Gün 1'deki teknikle, 5 saniye daha uzun.</li>
+        <li>Form bozulunca bırak — bozuk 40 sn yerine düzgün 25 sn.</li>
+      </ol>
+      <div class="sets-row">
+        <span class="sets-label">Setler:</span>
+        <button class="set-dot">1</button><button class="set-dot">2</button><button class="set-dot">3</button>
+        <span class="rest-note">Dinlenme: 45 sn</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<div class="progress-box">
+  <h3>4 HAFTALIK İLERLEME</h3>
+  <table>
+    <tr><td>Hafta 1</td><td>Yazılan set ve tekrarlarla başla. Teknik &gt; sayı.</td></tr>
+    <tr><td>Hafta 2</td><td>Her harekete +1 tekrar, plank'a +5 sn ekle.</td></tr>
+    <tr><td>Hafta 3</td><td>+1 tekrar daha. Diz üstü şınav kolaysa normal şınava geç.</td></tr>
+    <tr><td>Hafta 4</td><td>Squat ve lunge'a 4. seti ekle. Sonra bana yaz, programı büyütelim.</td></tr>
+  </table>
+</div>
+
+<div class="progress-box">
+  <h3>KURALLAR</h3>
+  Ağrı (kas yanması değil, batma/sızlama) varsa o hareketi o gün atla.
+  Su iç, setler arası dinlenmeyi kestirme.
+  Bir günü kaçırırsan telafi etmeye çalışma, sıradaki günden devam et.
+</div>
+
+<div class="credit">Hazırlayan &middot; <b>ATİLA FIT</b></div>
+
+</div>
+
+<div class="timerbar">
+  <div class="timer-inner">
+    <div>
+      <div class="timer-label">Dinlenme</div>
+      <div class="timer-display" id="tdisp">60</div>
+    </div>
+    <button class="tbtn" id="t60">60 sn başlat</button>
+    <button class="tbtn secondary" id="t45">45 sn</button>
+  </div>
+</div>
+
+<script>
+// Tab geçişleri
+document.querySelectorAll('.tab').forEach(function(tab){
+  tab.addEventListener('click', function(){
+    document.querySelectorAll('.tab').forEach(function(t){t.classList.remove('active')});
+    document.querySelectorAll('.day').forEach(function(d){d.classList.remove('active')});
+    tab.classList.add('active');
+    document.getElementById('day' + tab.dataset.day).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+  });
+});
+
+// Set işaretleme
+document.querySelectorAll('.set-dot').forEach(function(dot){
+  dot.addEventListener('click', function(){
+    dot.classList.toggle('done');
+    var card = dot.closest('.card');
+    var all = card.querySelectorAll('.set-dot');
+    var done = card.querySelectorAll('.set-dot.done');
+    card.classList.toggle('complete', all.length === done.length);
+  });
+});
+
+// Dinlenme sayacı
+var disp = document.getElementById('tdisp');
+var interval = null;
+function startTimer(sec){
+  clearInterval(interval);
+  disp.classList.remove('flash');
+  var remaining = sec;
+  disp.textContent = remaining;
+  interval = setInterval(function(){
+    remaining--;
+    disp.textContent = remaining;
+    if(remaining <= 0){
+      clearInterval(interval);
+      disp.textContent = 'HAZIR';
+      disp.classList.add('flash');
+      if(navigator.vibrate){ navigator.vibrate([200,100,200]); }
+    }
+  }, 1000);
+}
+document.getElementById('t60').addEventListener('click', function(){ startTimer(60); });
+document.getElementById('t45').addEventListener('click', function(){ startTimer(45); });
+</script>
+</body>
+</html>
