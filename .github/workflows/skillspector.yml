@@ -1,0 +1,53 @@
+name: SkillSpector skill scan
+
+# Scans every AI-agent skill (any directory with a SKILL.md) using NVIDIA
+# SkillSpector, static analysis only. Runs when a skill changes, on demand,
+# and weekly so new detection rules are applied to existing skills.
+on:
+  push:
+    paths:
+      - "**/SKILL.md"
+      - "**/skill.md"
+      - ".claude/skills/**"
+      - "skills/**"
+      - "scripts/scan-skills.sh"
+      - ".github/workflows/skillspector.yml"
+  pull_request:
+    paths:
+      - "**/SKILL.md"
+      - "**/skill.md"
+      - ".claude/skills/**"
+      - "skills/**"
+      - "scripts/scan-skills.sh"
+      - ".github/workflows/skillspector.yml"
+  workflow_dispatch:
+  schedule:
+    - cron: "17 6 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # Pinned to a release tag. Bump deliberately after reading its release notes.
+      - name: Install SkillSpector
+        run: pip install "git+https://github.com/NVIDIA/skillspector.git@v2.12.0"
+
+      - name: Scan skills
+        run: bash scripts/scan-skills.sh
+
+      - name: Upload reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: skillspector-reports
+          path: skillspector-reports/
+          if-no-files-found: ignore
