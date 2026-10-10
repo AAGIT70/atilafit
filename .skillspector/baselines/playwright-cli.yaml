@@ -1,0 +1,114 @@
+# SkillSpector baseline — findings listed here are suppressed on future scans.
+# Edit 'reason' fields and add glob 'rules' as needed. See docs/SUPPRESSION.md.
+version: 2
+scanner_version: 2.12.0
+rules: []
+fingerprints:
+- hash: sha256:b1d4fdd09cfa7409b14719409d9eb62f958755544e8fe52816c43d08e2717175
+  rule_id: RP1
+  file: SKILL.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:570f7188709dc043cb5d32bf70c24338c34f155ec0c597f64712b61f501763ae
+  rule_id: RP1
+  file: SKILL.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:0564e66af6973fd8cf4d29edc176b2e174e767a84eab4cd07e3b04aa53001d0d
+  rule_id: RP1
+  file: SKILL.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:ea94c3d94e123e6489537fff9c2dd1fdc65374879d84eb92d3f1ed7043c92272
+  rule_id: RP1
+  file: references/playwright-tests.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:119d618a622a59c98769d367ec15e1a78d3855eb3eae1689a29440423dcd5768
+  rule_id: RP1
+  file: references/playwright-tests.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:548713b5e8f917b31fa6c8799a63bc3fcb6483a053a230f59ca5ea9589acd645
+  rule_id: RP1
+  file: references/playwright-tests.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:08f80ca0a1eee4822d2db6a371f66c9afff4b793b53e57d4d440ebdc9db0ca50
+  rule_id: RP1
+  file: references/pr-attachments.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:b0ab41778016d4b3ad114dc37b67769ab3a43ba3532f7098b1d43f0bf5691237
+  rule_id: RP1
+  file: references/test-generation.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:6ae7e6273ebe99d313511cb111203b6b312709cd1daf78b267057d4011c5770b
+  rule_id: RP1
+  file: references/test-generation.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:ab9fee75e08313dd8e5bbc7b83f3ecb5693cb115c683bb35764657adfc3a33b6
+  rule_id: RP1
+  file: references/test-generation.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:6850eb32aff6a275eca825c6d0121a294a7ecbc064e3450fdf0b37404c2d3425
+  rule_id: RP1
+  file: references/test-generation.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:cd6ec9642624b21cbf794eba171e0e5349508223c812351ea345aa425c4c4721
+  rule_id: RP1
+  file: references/test-generation.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:0daedb7c42baba8cf121b91d5aeb67ca16206aff90ca8869178826a14f5272fe
+  rule_id: RP1
+  file: references/test-generation.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:5f5c83a11be57a3f13a5e087c456ea5fceb587ac9b5b60a91d9175cea4164dc2
+  rule_id: E1
+  file: SKILL.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:c03853daa6ad2d65bdb1178c0e9cde735a3e444532eb54da65e4e733b34617bd
+  rule_id: MP3
+  file: references/storage-state.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:ddf941c240f34ba3e631665a71017da087694e1bf08e4fff4887375076db0ca7
+  rule_id: RA2
+  file: references/storage-state.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:e41c9b2614d6f9aa56437edffc4a50294db8d694c840bee5321f6a8f469c4b00
+  rule_id: AE1
+  file: SKILL.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.
+- hash: sha256:48bf178dc3e41adda37c711da07d356baff290ff4a18cd23765a6e7d97ac6fc0
+  rule_id: AE1
+  file: SKILL.md
+  reason: Reviewed 2026-10-10 by reading every flagged line. Upstream is microsoft/playwright-cli
+    (Apache-2.0). Findings are documented, intended browser-automation behaviour or
+    scanner false positives. See .claude/skills/playwright-cli/NOTICE.md.

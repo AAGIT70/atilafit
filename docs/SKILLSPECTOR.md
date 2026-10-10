@@ -73,6 +73,30 @@ Other supported providers include `openai`, `nv_build`, `ollama`, `bedrock`,
 `azure_openai`, `gemini` and the local `claude_cli` login. Run
 `skillspector scan --help` for the full list and the variables each needs.
 
+## Reviewed baselines
+
+Some legitimate skills score above the gate because the scanner reacts to
+words rather than intent. Example: the Microsoft `playwright-cli` skill scores
+80 because it documents saving browser cookies to a file and running
+`npx playwright`. After reading every finding at its source line, accept them
+with a baseline so that only new findings fail CI:
+
+```bash
+skillspector baseline .claude/skills/<name> --no-llm \
+  -o .skillspector/baselines/<name>.yaml --reason "why these are acceptable"
+```
+
+`scripts/scan-skills.sh` picks the baseline up automatically by skill folder
+name and still prints the suppressed findings in the log. Write the reasoning
+in the skill's `NOTICE.md`. Never generate a baseline without reading the
+findings first, that would defeat the scanner.
+
+Current baselines:
+
+| Skill | Suppressed | Why |
+|---|---|---|
+| `playwright-cli` | 18 | Documented browser-automation behaviour and false positives, see its `NOTICE.md`. Accepted by the repository owner on 2026-10-10. |
+
 ## Upgrading
 
 The version is pinned to `v2.12.0` in the workflow and in this file. To
