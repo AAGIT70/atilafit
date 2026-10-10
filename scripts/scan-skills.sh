@@ -10,11 +10,18 @@
 #   scripts/scan-skills.sh                 # scan the repo, reports in skillspector-reports/
 #   scripts/scan-skills.sh path/to/skill   # scan one skill directory (or a URL / zip)
 #
+# Reviewed baselines: if .skillspector/baselines/<skill-dir-name>.yaml exists it is
+# passed as --baseline, and the suppressed findings are still printed. Generate one
+# only after reading every finding, with:
+#   skillspector baseline .claude/skills/<name> --no-llm \
+#     -o .skillspector/baselines/<name>.yaml --reason "..."
+#
 # Exit codes follow SkillSpector: 0 = all skills scored <= 50, 1 = at least one
 # skill scored > 50 or a strict gate fired, 2 = scanner error.
 set -u
 
 REPORT_DIR="${SKILLSPECTOR_REPORT_DIR:-skillspector-reports}"
+BASELINE_DIR="${SKILLSPECTOR_BASELINE_DIR:-.skillspector/baselines}"
 EXTRA_ARGS=(--no-llm ${SKILLSPECTOR_EXTRA_ARGS:-})
 
 if ! command -v skillspector >/dev/null 2>&1; then
@@ -47,10 +54,15 @@ for t in "${targets[@]}"; do
   name="$(basename "$t" | sed 's/[^A-Za-z0-9._-]/_/g')"
   echo
   echo "=== $t ==="
-  skillspector scan "$t" "${EXTRA_ARGS[@]}"
+  args=("${EXTRA_ARGS[@]}")
+  if [ -f "$BASELINE_DIR/$name.yaml" ]; then
+    echo "(reviewed baseline applied: $BASELINE_DIR/$name.yaml; suppressed findings are listed below)"
+    args+=(--baseline "$BASELINE_DIR/$name.yaml" --show-suppressed)
+  fi
+  skillspector scan "$t" "${args[@]}"
   rc=$?
-  skillspector scan "$t" "${EXTRA_ARGS[@]}" --format sarif --output "$REPORT_DIR/$name.sarif" >/dev/null 2>&1
-  skillspector scan "$t" "${EXTRA_ARGS[@]}" --format json  --output "$REPORT_DIR/$name.json"  >/dev/null 2>&1
+  skillspector scan "$t" "${args[@]}" --format sarif --output "$REPORT_DIR/$name.sarif" >/dev/null 2>&1
+  skillspector scan "$t" "${args[@]}" --format json  --output "$REPORT_DIR/$name.json"  >/dev/null 2>&1
   echo "--- exit code: $rc (reports: $REPORT_DIR/$name.{sarif,json})"
   [ "$rc" -gt "$worst" ] && worst=$rc
 done
